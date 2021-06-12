@@ -1,0 +1,26 @@
+  private void image_to_bmp(){
+            bmp = new Bitmap(dir);
+        }
+
+        private int get_width(Bitmap b)
+        {
+            return b.Size.Width;
+        }
+
+        private int get_height(Bitmap b)
+        {
+            return b.Size.Height;
+        }
+private int calc_L(int x, int y)
+        {
+            Color color = bmp.GetPixel(x, y);
+            return color.R/255;
+        } 
+
+        private int get_color(int x , int y)
+        {
+            col = bmp.GetPixel(x, y);
+            
+            pictureBox1.BackColor = col;
+            return col.GetHashCode();
+        }
