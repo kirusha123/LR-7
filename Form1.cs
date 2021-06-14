@@ -17,7 +17,7 @@ namespace lab1
         //<---------------ABOBA------------------>
 
         Bitmap bmp;
-        string dir = "./2.jpg";
+        string dir = "./ИД_рыбки.jpg";
 
         Color col;
 
@@ -85,6 +85,13 @@ namespace lab1
             image_to_bmp();
             height = get_height(bmp);
             width = get_width(bmp);
+
+            numericUp_n.Minimum = 1;
+            numericUp_m.Minimum = 1;
+            numericUp_n.Maximum = width;
+            numericUp_m.Maximum = height;
+            numericUp_n.Value = width;
+            numericUp_m.Value = height;
 
 
             RenderTimer.Start();
@@ -170,6 +177,45 @@ namespace lab1
             // подписываем это значение в label элементе под данным ползунком
             //label6.Text = zoom.ToString();
         }
+
+        private void numericUp_n_ValueChanged(object sender, EventArgs e)
+        {
+            n = (int) numericUp_n.Value;
+            newM = squeeze_matr(n, m, matr);
+        }
+
+        private void numericUp_m_ValueChanged(object sender, EventArgs e)
+        {
+            m = (int)numericUp_m.Value;
+            newM = squeeze_matr(n, m, matr);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RenderTimer.Stop();
+            DialogResult dr = openFileDialog1.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                dir = openFileDialog1.FileName;
+
+                image_to_bmp();
+                height = get_height(bmp);
+                width = get_width(bmp);
+
+                numericUp_n.Minimum = 1;
+                numericUp_m.Minimum = 1;
+                numericUp_n.Maximum = width;
+                numericUp_m.Maximum = height;
+                numericUp_n.Value = width;
+                numericUp_m.Value = height;
+                n = width;
+                m = height;
+                newM = squeeze_matr(n, m, matr);
+            }
+
+            RenderTimer.Start();
+        }
+
         // изменения значения чекбокса
 
         // изменение в элементах comboBox
@@ -272,11 +318,11 @@ namespace lab1
                 for (int j = 0; j < m; j++)
                 {
 
-                    color1 = new float[4] {(float)bmp.GetPixel(n-1-i, m-1-j).R/255, (float)bmp.GetPixel(n-1-i, m-1-j).R/255, (float)bmp.GetPixel(n-1-i, m-1-j).R/255, 1};
+                    /*color1 = new float[4] {(float)bmp.GetPixel(n-1-i, m-1-j).R/255, (float)bmp.GetPixel(n-1-i, m-1-j).R/255, (float)bmp.GetPixel(n-1-i, m-1-j).R/255, 1};
                     //(bmp.GetPixel(i-1,j-1).R, bmp.GetPixel(i - 1, j - 1).G, bmp.GetPixel(i - 1, j - 1).B);
                     Gl.glMaterialfv(Gl.GL_FRONT, Gl.GL_DIFFUSE, color1);
                     Gl.glMaterialfv(Gl.GL_FRONT, Gl.GL_SPECULAR, color1);
-                    Gl.glMaterialfv(Gl.GL_FRONT, Gl.GL_SHININESS, shininess);
+                    Gl.glMaterialfv(Gl.GL_FRONT, Gl.GL_SHININESS, shininess); */
 
                     Glut.glutSolidCylinder(size / 2, newM[i,j], 15, 15);
                     Gl.glTranslated(0,size,0);
